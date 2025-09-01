@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeRanker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>ResumeRanker</h1>
+    <button onclick="showUpload()">Upload Resume</button>
+  </header>
+
+  <section id="home">
+    <h2>Instantly See How Recruiters View Your Resume</h2>
+    <p>Upload your resume. Get a score. Improve.</p>
+    <button onclick="showUpload()">Try Now</button>
+  </section>
+
+  <section id="upload" style="display:none;">
+    <h2>Upload Your Resume</h2>
+    <input type="file" id="resumeInput">
+    <button onclick="analyzeResume()">Upload</button>
+  </section>
+
+  <section id="results" style="display:none;">
+    <h2>Your Resume Score: <span id="score">0</span>/100</h2>
+    <ul id="feedback"></ul>
+    <button onclick="restartAnalysis()">Analyze Another Resume</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
