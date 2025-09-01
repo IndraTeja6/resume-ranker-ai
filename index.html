@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ResumeRanker</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <h1>ResumeRanker</h1>
-    <button onclick="showUpload()">Upload Resume</button>
   </header>
 
+  <!-- Home Section -->
   <section id="home">
     <h2>Instantly See How Recruiters View Your Resume</h2>
-    <p>Upload your resume. Get a score. Improve.</p>
-    <button onclick="showUpload()">Try Now</button>
+    <p>Paste your resume below. Get a score. Improve instantly.</p>
   </section>
 
-  <section id="upload" style="display:none;">
-    <h2>Upload Your Resume</h2>
-    <input type="file" id="resumeInput">
-    <button onclick="analyzeResume()">Upload</button>
+  <!-- Upload Form -->
+  <section id="upload">
+    <form id="resumeForm">
+      <textarea
+        id="resumeText"
+        placeholder="Paste your resume here..."
+        rows="12"
+        cols="60"
+      ></textarea>
+      <br />
+      <button type="submit">Get Score</button>
+    </form>
   </section>
 
-  <section id="results" style="display:none;">
+  <!-- Results -->
+  <section id="results" style="display: none;">
     <h2>Your Resume Score: <span id="score">0</span>/100</h2>
     <ul id="feedback"></ul>
     <button onclick="restartAnalysis()">Analyze Another Resume</button>
