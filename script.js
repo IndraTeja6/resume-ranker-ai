@@ -10,7 +10,7 @@ document
     }
 
     try {
-      const response = await fetch("https://your-backend-url/api/score", {
+      const response = await fetch("https://resumerank-backend.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: resumeText }),
