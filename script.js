@@ -29,7 +29,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
   // If we have text (from paste or file), score it
   if (textToSend) {
     try {
-      const response = await fetch("https://your-app.onrender.com/api/upload", {
+      const response = await fetch("https://your-app.onrender.com/api/score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: textToSend }),
