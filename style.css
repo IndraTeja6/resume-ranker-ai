@@ -1,47 +1,104 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+* {
   margin: 0;
   padding: 0;
-  background: #f5f7fa;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: #f9fafb;
   color: #222;
+  line-height: 1.6;
+  padding: 20px;
 }
 
+/* Header */
 header {
-  background: #1a1a2e;
-  color: white;
-  padding: 1rem;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-textarea {
-  margin: 15px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 80%;
+header h1 {
+  font-size: 2.2rem;
+  color: #1e40af; /* Indigo */
+  font-weight: 700;
+}
+
+/* Form Section */
+#upload {
+  background: #fff;
   max-width: 600px;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
+#upload label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+#resumeFile,
+#resumeText {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+#resumeText {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* Button */
 button {
-  background: #4caf50;
-  border: none;
+  display: inline-block;
+  background: #1e40af;
+  color: #fff;
   padding: 10px 20px;
-  color: white;
-  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  margin: 10px;
-  border-radius: 6px;
+  transition: background 0.2s ease;
 }
 
 button:hover {
-  background: #45a049;
+  background: #1e3a8a;
 }
 
+/* Results Section */
 #results {
-  margin-top: 20px;
+  max-width: 600px;
+  margin: 30px auto 0;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+#results h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+#score {
+  font-weight: bold;
+  color: #1e40af;
 }
 
 #feedback {
-  list-style: none;
-  padding: 0;
+  list-style: disc;
+  padding-left: 20px;
+}
+
+#feedback li {
+  margin-bottom: 8px;
 }
