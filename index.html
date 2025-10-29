@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CareerPath AI — Resume Analyzer</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* Smooth scroll for entire page */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">CareerPath AI</div>
+      <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#companies" id="navCompanies">Companies</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#upload" class="cta-button primary-cta">Analyze My Resume Now</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Unlock Your Career Potential with AI-Powered Resume Analysis</h1>
+          <p class="subtitle">Get instant, actionable feedback to optimize your resume for ATS and recruiters.</p>
+          <div class="hero-ctas">
+            <a href="#upload" class="cta-button primary-cta large-cta">Upload Resume</a>
+            <a href="#features" class="cta-button secondary-cta large-cta">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-illustration">
+          <svg viewBox="0 0 100 100" class="illustration-svg" aria-hidden="true">
+            <rect x="10" y="30" width="30" height="45" rx="3" fill="none" stroke="#2ecc71" stroke-width="3"/>
+            <circle cx="70" cy="30" r="15" fill="none" stroke="#3498db" stroke-width="3"/>
+            <polyline points="40,52 60,72 85,45" fill="none" stroke="#2ecc71" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works-section" id="how-it-works">
+      <div class="container">
+        <h2>How It Works: Simple, Fast, Effective</h2>
+        <div class="steps-grid">
+          <div class="step-card"><i class="fas fa-file-upload step-icon"></i><h3>Upload Resume</h3><p>Upload your resume in PDF or DOCX format.</p></div>
+          <div class="step-card"><i class="fas fa-microchip step-icon"></i><h3>AI Analyzes</h3><p>Our AI reviews formatting, keywords, and impact.</p></div>
+          <div class="step-card"><i class="fas fa-chart-line step-icon"></i><h3>Instant Feedback</h3><p>Receive an actionable improvement report.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <h2>Why Choose Our Resume Analyzer?</h2>
+        <div class="features-grid">
+          <div class="feature-card"><i class="fas fa-robot"></i><h3>ATS Compatibility</h3><p>Ensure your resume passes modern applicant tracking systems.</p></div>
+          <div class="feature-card"><i class="fas fa-cloud"></i><h3>Keyword Optimization</h3><p>Identify and integrate relevant job-specific keywords.</p></div>
+          <div class="feature-card"><i class="fas fa-lightbulb"></i><h3>Impact Score</h3><p>Measure the clarity and impact of your content.</p></div>
+          <div class="feature-card"><i class="fas fa-ruler-combined"></i><h3>Design Review</h3><p>Get insights on layout, consistency, and readability.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPANIES SECTION -->
+    <section id="companies" style="padding: 60px 0; background-color: var(--light-bg);">
+      <div class="container">
+        <h2 style="font-size: 2.5rem; margin-bottom: 15px; color: var(--secondary-color);">AI-Driven Insights: Target the Right Companies</h2>
+        <p style="font-size: 1.2rem; color: #555;">We help you understand company expectations so you can tailor your resume effectively.</p>
+
+        <div class="job-scroll-container" style="margin-top:30px;">
+          <div class="sticky-header-wrapper">
+            <div class="job-filter-bar" aria-label="Job filters">
+              <a href="#" class="filter-link active" data-filter="all">All</a>
+              <a href="#" class="filter-link" data-filter="engineering">Engineering</a>
+              <a href="#" class="filter-link" data-filter="commerce">Commerce</a>
+              <a href="#" class="filter-link" data-filter="medical">Medical</a>
+            </div>
+          </div>
+
+          <div class="job-cards-inner-wrapper">
+            <div class="job-card-grid-scroll">
+
+              <!-- ENGINEERING -->
+              <div class="job-card" data-category="engineering">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#2196F3;">FK</div><div class="logo-name-group"><span class="company-name">Flipkart</span><span class="tag-orange">Actively Hiring</span></div></div>
+                <h3 class="job-title">Senior Data Analyst</h3>
+                <p><strong>Skills:</strong> SQL, Tableau, Python</p>
+                <p><strong>Eligibility:</strong> Bachelor’s in Analytics or CS</p>
+                <p><strong>Salary:</strong> ₹80K–₹120K/month</p>
+              </div>
+
+              <div class="job-card" data-category="engineering">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#6A0DAD;">MS</div><div class="logo-name-group"><span class="company-name">Microsoft</span></div></div>
+                <h3 class="job-title">Software Engineer</h3>
+                <p><strong>Skills:</strong> C#, Azure, React</p>
+                <p><strong>Eligibility:</strong> Bachelor’s in CS</p>
+                <p><strong>Salary:</strong> ₹130K–₹180K/month</p>
+              </div>
+
+              <div class="job-card" data-category="engineering">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#ff5722;">GO</div><div class="logo-name-group"><span class="company-name">Google</span></div></div>
+                <h3 class="job-title">Machine Learning Engineer</h3>
+                <p><strong>Skills:</strong> TensorFlow, Python, Data Science</p>
+                <p><strong>Eligibility:</strong> M.Tech/PhD</p>
+                <p><strong>Salary:</strong> ₹180K–₹250K/month</p>
+              </div>
+
+              <!-- COMMERCE -->
+              <div class="job-card" data-category="commerce">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#F80000;">JC</div><div class="logo-name-group"><span class="company-name">J.P. Morgan Chase</span></div></div>
+                <h3 class="job-title">Financial Analyst (Global Markets)</h3>
+                <p><strong>Skills:</strong> Financial Modeling, Excel, Valuation</p>
+                <p><strong>Eligibility:</strong> MBA Finance</p>
+                <p><strong>Salary:</strong> ₹116K–₹150K/month</p>
+              </div>
+
+              <div class="job-card" data-category="commerce">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#28a745;">DG</div><div class="logo-name-group"><span class="company-name">Deloitte</span></div></div>
+                <h3 class="job-title">Business Consultant</h3>
+                <p><strong>Skills:</strong> Strategy, Data Analytics, Excel</p>
+                <p><strong>Eligibility:</strong> MBA/CA</p>
+                <p><strong>Salary:</strong> ₹100K–₹140K/month</p>
+              </div>
+
+              <!-- MEDICAL -->
+              <div class="job-card" data-category="medical">
+                <div class="card-top-section"><div class="logo-circle" style="background-color:#e91e63;">AP</div><div class="logo-name-group"><span class="company-name">Apollo Hospitals</span></div></div>
+                <h3 class="job-title">Clinical Research Associate</h3>
+                <p><strong>Skills:</strong> Data Collection, Research Protocols, Compliance</p>
+                <p><strong>Eligibility:</strong> B.Sc in Life Sciences</p>
+                <p><strong>Salary:</strong> ₹60K–₹90K/month</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPLOAD -->
+    <section class="upload-section" id="upload">
+      <div class="container">
+        <div class="upload-box">
+          <h1>Ready to Optimize Your Resume?</h1>
+          <form class="upload-form" action="/analyze" method="post" enctype="multipart/form-data">
+            <label for="resume-upload" class="custom-file-upload" id="customFileLabel">
+              <i class="fas fa-cloud-upload-alt"></i> Select Resume File
+            </label>
+            <input type="file" id="resume-upload" name="resumeFile" accept=".pdf,.docx" required>
+            <textarea name="jobDescription" placeholder="Optional: Paste job description here..." rows="5"></textarea>
+            <button type="submit" class="cta-button primary-cta large-cta"><i class="fas fa-microchip"></i> Analyze</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-us-section" id="about">
+      <div class="container">
+        <h2>Our Mission: Your Interview Success</h2>
+        <div class="about-content-grid">
+          <div class="about-box">
+            <h3>Why CareerPath AI?</h3>
+            <p>We use advanced AI and recruiter insights to help job seekers pass ATS filters and get noticed.</p>
+            <div class="stats-group">
+              <div class="stat-item"><strong>10K+</strong><p>Resumes Analyzed</p></div>
+              <div class="stat-item"><strong>98%</strong><p>ATS Pass Rate</p></div>
+              <div class="stat-item"><strong>3X</strong><p>Interview Rate</p></div>
+            </div>
+          </div>
+          <div class="about-box about-image-box">
+            <div class="image-placeholder">
+              <i class="fas fa-handshake-angle"></i>
+              <p>Committed to Your Growth</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <h2>Get in Touch</h2>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="info-item"><i class="fas fa-envelope"></i><div><strong>Email:</strong> support@careerpathai.com</div></div>
+            <div class="info-item"><i class="fas fa-phone-alt"></i><div><strong>Phone:</strong> (123) 456-7890</div></div>
+          </div>
+          <div class="contact-form-box">
+            <form class="contact-form">
+              <input type="text" placeholder="Your Name" required>
+              <input type="email" placeholder="Your Email" required>
+              <textarea placeholder="Your Message" rows="5" required></textarea>
+              <button type="submit" class="cta-button primary-cta">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta-section">
+      <div class="container">
+        <h2>Ready to Perfect Your Resume?</h2>
+        <a href="#upload" class="cta-button primary-cta large-cta">Analyze Now</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 CareerPath AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Filter Logic
+      const filterBar = document.querySelector('.job-filter-bar');
+      const jobCards = document.querySelectorAll('.job-card');
+      filterBar.addEventListener('click', e => {
+        if (e.target.classList.contains('filter-link')) {
+          e.preventDefault();
+          document.querySelectorAll('.filter-link').forEach(l => l.classList.remove('active'));
+          e.target.classList.add('active');
+          const filter = e.target.dataset.filter;
+          jobCards.forEach(c => {
+            c.classList.toggle('hidden', filter !== 'all' && c.dataset.category !== filter);
+          });
+        }
+      });
+
+      // Custom File Label Update
+      const input = document.getElementById('resume-upload');
+      const label = document.getElementById('customFileLabel');
+      input.addEventListener('change', () => {
+        if (input.files.length) label.textContent = input.files[0].name;
+      });
+
+      // Smooth scroll enhancement for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== "#") {
+            e.preventDefault();
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        });
+      });
+
+      // Ensure "Companies" always shows all cards when clicked
+      const navCompanies = document.getElementById('navCompanies');
+      navCompanies.addEventListener('click', () => {
+        document.querySelectorAll('.filter-link').forEach(l => l.classList.remove('active'));
+        document.querySelector('.filter-link[data-filter="all"]').classList.add('active');
+        jobCards.forEach(c => c.classList.remove('hidden'));
+      });
+    });
+  </script>
+</body>
+</html>
