@@ -6,7 +6,7 @@
     --primary-color: #9f49f4; /* A vibrant purple for highlights */
     --transition-time: 0.3s;
     /* --- NEW VARIABLE FOR SCROLL OFFSET --- */
-    --scroll-offset: 100px; 
+    --scroll-offset: 100px; /* MODIFIED: Increased offset for safer clearance */
 }
 
 * {
@@ -20,7 +20,7 @@ body {
     background-color: var(--bg-dark); /* Fallback for slow load/error */
     color: var(--text-light);
     line-height: 1.6;
-    scroll-behavior: smooth;
+    /* REMOVED: scroll-behavior: smooth; (JS now controls smooth scroll) */
 
     /* === NEW BACKGROUND IMAGE PROPERTIES (Applied to Body) === */
     background-image: url('https://i.pinimg.com/1200x/72/18/ee/7218eede34cc99623288ee1af6369aa7.jpg');
@@ -31,8 +31,7 @@ body {
 }
 
 /* --- NEW: Scroll Padding for Fixed Navbar Offset --- */
-/* Target all sections referenced by anchor links and apply an offset 
-   equal to the height of the fixed navbar plus a little extra space. */
+/* This is a fallback but now primarily managed by JS for precision */
 #home, 
 #features, 
 #how-it-works, 
@@ -54,7 +53,8 @@ body {
 }
 
 .section {
-    padding: 80px 10%;
+    /* MODIFIED: Reduced padding for all sections */
+    padding: 60px 10%;
     text-align: center;
 }
 
@@ -118,45 +118,82 @@ body {
 /* --- End Link Keyframe --- */
 
 
-/* --- Navigation Bar (Header) --- */
+/* --- Navigation Bar (Header) - NEW STYLING --- */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 10%;
     position: sticky;
     top: 0;
     z-index: 1000;
-    /* MODIFIED: Solid black background */
-    background: #000000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5%; /* Adjusted padding */
+    /* Dark, slightly opaque background with blur effect */
+    background-color: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid #1a1a1a; /* Changed border to solid dark line */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color var(--transition-time);
 }
 
 .logo {
-    font-size: 2.2em;
+    font-size: 2.5rem; /* MODIFIED: Increased size for emphasis */
     font-weight: 800;
     color: var(--primary-color); 
-    text-shadow: 0 0 10px var(--text-light); 
-    animation: logoPulse 2s infinite alternate ease-in-out;
+    letter-spacing: -0.05em; /* Added spacing */
+    text-shadow: 0 0 10px var(--text-light); /* Kept existing shadow for consistency with pulse */
+    animation: logoPulse 2s infinite alternate ease-in-out; /* Kept existing animation */
 }
 
 .navbar nav a {
     color: var(--text-light);
     text-decoration: none;
     margin-left: 30px;
-    font-size: 1.0em;
-    position: relative;
-    /* Added text-shadow transition for hover */
-    transition: color var(--transition-time), text-shadow var(--transition-time); 
+    font-size: 1rem; /* Adjusted size */
     font-weight: 500;
+    padding: 5px 0; /* Added padding for underline space */
+    position: relative;
+    /* Added transition for text color */
+    transition: color var(--transition-time); 
     z-index: 1; 
 }
 
+/* Link text color changes to purple on hover */
 .navbar nav a:hover {
     color: var(--primary-color);
-    /* Subtle glow on hover */
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); 
+    /* Removed text-shadow from here */
 }
+
+/* The Underline (::after pseudo-element) */
+.navbar nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; /* Starts hidden */
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--transition-time); /* Animates the width */
+}
+
+/* Underline is 100% wide on hover for all links */
+.navbar nav a:hover::after {
+    width: 100%;
+}
+
+/* --- NEW: Active Navigation Link Styling (Static) --- */
+/* This style applies when the corresponding section is in view. */
+.navbar nav a.active-nav {
+    /* Keep text white when active to follow user request */
+    color: var(--text-light) !important; 
+}
+
+/* Ensure the purple bar is fully visible when the link is active */
+.navbar nav a.active-nav::after {
+    width: 100%;
+}
+/* --- END NEW ACTIVE STYLING --- */
+
 
 /* MODIFIED: NAVIGATION LINK ACTIVE/FOCUS GLOW EFFECT */
 /* Animation runs only when the mouse button is down */
@@ -169,16 +206,16 @@ body {
 /* === END GLOW EFFECT === */
 
 
-/* *** ADDED: CTA Button in the Navbar (Small Size) *** */
+/* *** ADDED: CTA Button in the Navbar (Small Size) - MODIFIED FOR NEW STYLE *** */
 .cta-button-nav {
     background-color: var(--primary-color);
     color: var(--text-light);
     border: none;
     padding: 10px 20px; 
-    font-size: 0.9em; 
+    font-size: 0.9rem; /* Adjusted size */
     font-weight: 600;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 50px; /* UPDATED: Curvy/Pill shape */
     text-decoration: none;
     transition: background-color var(--transition-time), box-shadow var(--transition-time), transform var(--transition-time);
 }
@@ -190,6 +227,15 @@ body {
     transform: scale(1.03);
 }
 /* *** END CTA Button Styling *** */
+
+
+/* --- Media Query for Mobile (Hides the nav links) --- */
+@media (max-width: 768px) {
+    .navbar nav {
+        display: none; /* Hide nav links on smaller screens for simplicity */
+    }
+}
+/* --- End Navigation Bar (Header) --- */
 
 
 /* --- Keyframe Animation for Glowing Circle (Permanent Loop) --- */
@@ -391,7 +437,8 @@ body {
 .about-us-section {
     /* Set to transparent to fully reveal the body background image/gradient */
     background-color: rgba(0, 0, 0, 0.8); 
-    padding: 80px 10%; /* Apply standard section padding */
+    /* MODIFIED: Reduced padding from 80px to 60px to match other sections and decrease the gap */
+    padding: 60px 10%; 
     text-align: center;
 }
 
@@ -563,7 +610,17 @@ body {
 * Using .craft-section class applied to the #features ID
 */
 .craft-section {
-    background-color: rgba(0, 0, 0, 0.4);
+    /* REMOVED: background-color: rgba(0, 0, 0, 0.4); */
+    
+    /* === NEW: Background image from user upload for Features section === */
+    background-image: url('Screenshot 2025-10-31 223036.jpg'); 
+    background-size: cover;
+    background-position: center center;
+    background-attachment: scroll; /* Allow it to scroll with the section */
+    /* Added a dark overlay to maintain contrast for the card content */
+    background-color: rgba(0, 0, 0, 0.5); /* Base dark color */
+    background-blend-mode: multiply; /* Darken the image with the background color */
+    /* =================================================================== */
 }
 
 /* *** MODIFIED GRID FOR SMALLER CARDS *** */
@@ -716,6 +773,7 @@ body {
     color: var(--text-light); /* Make p text pure white (a little more white) */
     font-size: 0.9em;
 }
+
 /* --- END: CUSTOM STYLES FOR HOW IT WORKS SECTION --- */
 
 /* *
@@ -995,7 +1053,7 @@ body {
 /* --- New CTA Banner Section --- */
 .cta-banner {
     background-color: var(--primary-color); /* Your existing vibrant purple */
-    padding: 15px 5px; /* ADJUSTED: Decreased from 80px to 60px for a shorter height */
+    padding: 13px 5px; /* ADJUSTED: Decreased from 80px to 60px for a shorter height */
     text-align: center;
     color: var(--text-light); /* White/light text on purple */
     position: relative;
@@ -1004,14 +1062,14 @@ body {
 
 .cta-banner h2 {
     font-size: 3em;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: var(--text-light); /* Ensure heading is white */
     text-shadow: 0 0 10px rgba(159, 73, 244, 0.4); /* Subtle glow */
 }
 
 .cta-banner p {
     font-size: 1.3em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: rgba(255, 255, 255, 0.9); /* Slightly muted white */
 }
 
@@ -1041,7 +1099,7 @@ body {
     /* Using the darkest background */
     background-color: var(--bg-dark); 
     color: var(--text-muted); /* Muted text color for copyright */
-    padding: 30px 10%; /* Using 10% padding for consistency */
+    padding: 25px 10%; /* Using 10% padding for consistency */
     text-align: center;
     font-size: 0.9em;
     border-top: 1px solid rgba(255, 255, 255, 0.08); /* Subtle separator */
@@ -1077,7 +1135,7 @@ body {
 @media (max-width: 768px) {
     /* ADJUSTED: Decreased mobile padding to reduce height further on small screens */
     .cta-banner { 
-        padding: 40px 20px; 
+        padding: 30px 20px; 
     }
     
     .cta-banner h2 {
