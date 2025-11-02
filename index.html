@@ -16,7 +16,7 @@
             <a href="#">Home</a>
             <a href="#features">Features</a>
             <a href="#how-it-works">How it works</a>
-            <a href="#companies.html">Companies</a>
+            <a href="careers.html">Careers</a>
             <a href="#experience">AI Technology</a>
             <a href="#about">About Us</a>
             <a href="#contact">Contact</a>
@@ -149,7 +149,7 @@
             </div>
     </section>
 
-    <section class="about-us-section" id="about">
+    <section id="about" class="about-us-section">
         <div class="container">
             <h2 data-aos="fade-down">Our Mission: Your Interview Success</h2>
             
@@ -275,53 +275,133 @@
           once: true 
       });
 
-      // --- Custom Script to Rerun AOS on Scroll Jump ---
       const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.navbar nav a');
+      const navbar = document.querySelector('.navbar');
+      
+      // Get the height of the fixed navbar once for scroll calculation
+      const navbarHeight = navbar ? navbar.offsetHeight : 80; // Default to 80 if not found
 
-      // 1. Setup Intersection Observer
+      // --- 1. SCROLL-TO-ANCHOR FIX (Controls precise scroll on link click) ---
+      function smoothScrollToTarget(targetId) {
+          // Handle 'Home' link which points to the body/top of the page
+          if (targetId === 'body' || targetId === '#') {
+             window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+              });
+              return;
+          }
+          
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+              // Calculate the correct scroll position:
+              // Top of the section MINUS the height of the fixed navbar
+              const scrollToPosition = targetSection.offsetTop - navbarHeight;
+
+              // Use window.scrollTo for precise, instant scrolling
+              window.scrollTo({
+                  top: scrollToPosition,
+                  behavior: 'smooth' // Keep the smooth effect
+              });
+          }
+      }
+      // ---------------------------------------------
+
+
+      // --- 2. ACTIVE NAVIGATION LOGIC (Controls purple bar on scroll) ---
+      function updateActiveLink() {
+        let currentScroll = window.scrollY;
+
+        // Step 1: Clear all active classes
+        navLinks.forEach(link => {
+            link.classList.remove('active-nav');
+        });
+
+        // Step 2: Check which section is in view and apply the active class
+        sections.forEach(section => {
+          // Use an offset slightly larger than the navbar height for smooth transition
+          const sectionOffset = navbarHeight + 5; 
+          const sectionTop = section.offsetTop - sectionOffset;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+
+          if (currentScroll >= sectionTop && currentScroll < sectionBottom) {
+            const targetLink = sectionId === 'home' 
+                ? document.querySelector('.navbar nav a[href="#"]') 
+                : document.querySelector(`.navbar nav a[href="#${sectionId}"]`);
+            
+            if (targetLink) {
+                targetLink.classList.add('active-nav');
+            }
+          }
+        });
+      }
+      
+      // 3. Setup Listeners and Override Link Click Behavior
+      window.addEventListener('scroll', updateActiveLink);
+      window.addEventListener('load', updateActiveLink);
+      
+      // Override default link click behavior to use our corrected scroll function
+      navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+          
+          // Get the anchor target (e.g., "#features" or "#")
+          let target = link.getAttribute('href');
+          
+          // Only interfere with anchor links
+          if (target && target.startsWith('#')) {
+              // Prevent default browser jump to allow our custom scroll to run
+              event.preventDefault(); 
+              
+              // Run our custom, fixed-offset scroll function
+              smoothScrollToTarget(target);
+
+              // Force AOS refresh and active link update after a brief delay
+              setTimeout(() => {
+                AOS.refresh(); 
+                updateActiveLink(); 
+              }, 150);
+          }
+        });
+      });
+
+      // === START FIX: Handle page load with a URL Hash (e.g., from companies.html#contact) ===
+      if (window.location.hash) {
+          const targetHash = window.location.hash;
+          // Use a small timeout to ensure all page elements and heights are calculated
+          setTimeout(() => {
+              // Use the existing function to apply the fixed offset
+              smoothScrollToTarget(targetHash); 
+          }, 50); 
+      }
+      // === END FIX ===
+
+
+      // 4. Custom Script to Rerun AOS on Scroll Jump (Existing Logic preserved)
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             const aosElements = entry.target.querySelectorAll('[data-aos]');
 
             if (entry.isIntersecting) {
-                // *** ACTION 1: Section is entering the viewport (animate it) ***
-                // Remove the 'aos-animate' class to reset the state
                 aosElements.forEach(el => {
                     el.classList.remove('aos-animate');
                 });
-                
-                // Force AOS to check and apply animations
                 AOS.refresh();
-
             } else {
-                // *** ACTION 2: Section is leaving the viewport (reset it) ***
-                // When a section scrolls out, we need to ensure the animation class is gone 
-                // so it can animate again when scrolling back in.
                 aosElements.forEach(el => {
                     el.classList.remove('aos-animate');
                 });
             }
         });
       }, {
-        // Use a threshold close to 0 to trigger quickly on entry/exit
         threshold: 0.05 
       });
 
-      // 3. Attach the observer to all sections
       sections.forEach(section => {
         observer.observe(section);
       });
       
-      // 4. Force refresh when clicking a nav link to ensure immediate animation when jumping
-      const navLinks = document.querySelectorAll('.navbar nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-          // A small delay allows the browser to scroll to the anchor first
-          setTimeout(() => {
-            AOS.refresh(); 
-          }, 150);
-        });
-      });
     </script>
 
 </body>
