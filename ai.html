@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>AI Assistance</title>
+
+	<link rel="stylesheet" href="ai.css" />
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+	<header class="navbar">
+		<div class="logo">CareerPath AI</div>
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="careers.html">Career</a>
+			<a href="#upload">Upload</a>
+			<a href="#track">Track Applications</a>
+			<a href="#assist">Assist</a>
+			<a href="#result">Result</a>
+			<a href="#pricing">Plans</a>
+			<a href="index.html#contacts">Contact Us</a>
+		</nav>
+		<a href="ai.html" class="cta-button-nav">Analyze Your Resume Now</a>
+	</header>
+
+	<section id="upload" class="section">
+		<div class="container">
+			<h2 data-aos="fade-up">Upload Resume</h2>
+
+			<div class="resume-box" data-aos="fade-up" data-aos-delay="150">
+				<h3>Ready to Optimize Your Resume?</h3>
+				<p class="sub">Our AI will instantly evaluate your resume across ATS parameters, recruiters insights and industry metrics.</p>
+
+				<div class="drag-area">
+					<p id="fileStatus">Drag & Drop your resume here</p>
+
+					<input type="file" id="resumeInput" hidden accept=".pdf,.doc,.docx" />
+					<button class="select-btn" onclick="resumeInput.click()">Select File</button>
+				</div>
+
+				<textarea class="job-desc" placeholder="Paste the job description (optional)"></textarea>
+
+				<button class="analyze-btn" onclick="analyzeResume()">Analyze My Resume</button>
+
+				<p class="support">Supported formats: .PDF, .DOC, .DOCX</p>
+
+				<p class="signin">Already have an account? <a href="#">Sign in</a></p>
+			</div>
+		</div>
+	</section>
+
+	<section id="track" class="section">
+		<div class="container">
+			<h2 data-aos="fade-up">Application Status</h2>
+		</div>
+		<div class="application-dashboard">
+			<div class="dash-head">
+				<h2 data-aos="fade-up">Dashborad</h2>
+				<button class="new-app-btn">+ Add New</button>
+			</div>
+
+			<table class="app-table">
+				<thead>
+					<tr>
+						<th>Company</th>
+						<th>Role</th>
+						<th>Status</th>
+						<th>Date Applied</th>
+					</tr>
+				</thead>
+				<tbody id="appRows">
+					<!-- rows inserted by JS -->
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section id="result" class="section">
+		<div class="container">
+			<h2 data-aos="fade-up">Results &amp; Insights</h2>
+			<div id="resultsContainer" style="display: none;">
+				<div class="results-header">
+					<div class="overall-score">
+						<div class="score-circle">
+							<span id="overallScore">-</span>
+							<small>/100</small>
+						</div>
+						<h3>Overall Score</h3>
+						<p id="scoreSummary">Your resume analysis summary will appear here</p>
+					</div>
+				</div>
+				
+				<div class="score-breakdown">
+					<div class="score-item">
+						<i class="fas fa-robot"></i>
+						<div class="score-info">
+							<h4>ATS Compatibility</h4>
+							<div class="progress-bar">
+								<div class="progress" id="atsProgress"></div>
+							</div>
+							<span id="atsScore">-</span>/100
+						</div>
+					</div>
+					<div class="score-item">
+						<i class="fas fa-cogs"></i>
+						<div class="score-info">
+							<h4>Skills Assessment</h4>
+							<div class="progress-bar">
+								<div class="progress" id="skillsProgress"></div>
+							</div>
+							<span id="skillsScore">-</span>/100
+						</div>
+					</div>
+					<div class="score-item">
+						<i class="fas fa-briefcase"></i>
+						<div class="score-info">
+							<h4>Experience</h4>
+							<div class="progress-bar">
+								<div class="progress" id="experienceProgress"></div>
+							</div>
+							<span id="experienceScore">-</span>/100
+						</div>
+					</div>
+					<div class="score-item">
+						<i class="fas fa-file-alt"></i>
+						<div class="score-info">
+							<h4>Format Quality</h4>
+							<div class="progress-bar">
+								<div class="progress" id="formatProgress"></div>
+							</div>
+							<span id="formatScore">-</span>/100
+						</div>
+					</div>
+				</div>
+				
+				<div class="feedback-grid">
+					<div class="feedback-card strengths-card">
+						<div class="card-header">
+							<i class="fas fa-thumbs-up"></i>
+							<h4>Key Strengths</h4>
+						</div>
+						<ul id="strengthsList"></ul>
+					</div>
+					
+					<div class="feedback-card improvements-card">
+						<div class="card-header">
+							<i class="fas fa-exclamation-triangle"></i>
+							<h4>Areas for Improvement</h4>
+						</div>
+						<ul id="improvementsList"></ul>
+					</div>
+					
+					<div class="feedback-card suggestions-card">
+						<div class="card-header">
+							<i class="fas fa-lightbulb"></i>
+							<h4>Actionable Suggestions</h4>
+						</div>
+						<ul id="suggestionsList"></ul>
+					</div>
+					
+					<div class="feedback-card keywords-card" id="keywordsCard" style="display: none;">
+						<div class="card-header">
+							<i class="fas fa-tags"></i>
+							<h4>Missing Keywords</h4>
+						</div>
+						<ul id="keywordsList"></ul>
+					</div>
+				</div>
+			</div>
+			<div id="loadingMessage" style="display: none; text-align: center; padding: 20px;">
+				<p>Analyzing your resume... Please wait.</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="pricing" class="section">
+		<div class="container">
+			<h2 data-aos="fade-down">Flexible Plans for Every Enterprise Size</h2>
+			<p data-aos="fade-down" data-aos-delay="100">
+				Our pricing is volume-based and tailored to your company's annual hiring needs. Contact our sales team for a custom quote.
+			</p>
+
+			<div class="pricing-table">
+				<div class="plan-card" data-aos="zoom-in" data-aos-delay="200">
+					<h3>Startup</h3>
+					<p>For high-growth companies with low-volume hiring.</p>
+					<div class="price">Custom <span>/ month</span></div>
+					<ul>
+						<li><i class="fas fa-check-circle"></i> Up to 500 Resumes/Month</li>
+						<li><i class="fas fa-check-circle"></i> Single ATS Integration</li>
+						<li><i class="fas fa-check-circle"></i> Basic Candidate Scoring</li>
+						<li><i class="fas fa-check-circle"></i> Standard Reporting Dashboard</li>
+						<li><i class="fas fa-check-circle"></i> Email Support</li>
+					</ul>
+					<a href="#pricing" class="cta-button">Talk to Sales</a>
+				</div>
+
+				<div class="plan-card featured" data-aos="zoom-in" data-aos-delay="300">
+					<h3>Enterprise <span style="font-size: 1rem; margin-left: 10px; background-color: var(--primary-color); color: #fff; padding: 3px 8px; border-radius: 5px;">BEST VALUE</span></h3>
+					<p>The full suite of tools for large organizations with complex needs.</p>
+					<div class="price">Custom <span>/ month</span></div>
+					<ul>
+						<li><i class="fas fa-check-circle"></i> Unlimited Resumes</li>
+						<li><i class="fas fa-check-circle"></i> Multi-ATS Integration</li>
+						<li><i class="fas fa-check-circle"></i> **Bias Reduction Audit**</li>
+						<li><i class="fas fa-check-circle"></i> **Talent Gap Analysis**</li>
+						<li><i class="fas fa-check-circle"></i> Priority Dedicated Support</li>
+					</ul>
+					<a href="#pricing" class="cta-button">Request Enterprise Demo</a>
+				</div>
+
+				<div class="plan-card" data-aos="zoom-in" data-aos-delay="400">
+					<h3>Professional</h3>
+					<p>Ideal for mid-sized teams scaling their recruitment efforts.</p>
+					<div class="price">Custom <span>/ month</span></div>
+					<ul>
+						<li><i class="fas fa-check-circle"></i> Up to 5,000 Resumes/Month</li>
+						<li><i class="fas fa-check-circle"></i> Multi-Team Access</li>
+						<li><i class="fas fa-check-circle"></i> Advanced Candidate Scoring</li>
+						<li><i class="fas fa-check-circle"></i> Custom Data Export</li>
+						<li><i class="fas fa-check-circle"></i> Phone and Email Support</li>
+					</ul>
+					<a href="#pricing" class="cta-button">Start Trial</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="final-cta-banner" class="section">
+		<div class="container cta-content">
+			<h1 data-aos="fade-up" data-aos-delay="50">Ready to Perfect Your Resume?</h1>
+			<p data-aos="fade-up" data-aos-delay="150">Start getting more interviews today. It's fast, free, and secure.</p>
+			<a href="#hero" class="cta-button" data-aos="fade-up" data-aos-delay="250">Analyze Your Resume Now - It's Free!</a>
+		</div>
+	</section>
+
+	<footer class="minimal-footer">
+		<div class="footer-content">
+			<p>&copy; 2024 CareerPath AI. All Rights Reserved.</p>
+			<div class="footer-links">
+				<a href="#">Privacy Policy</a>
+				<a href="#">Terms of Service</a>
+				<a href="#hero">Contact Us</a>
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+		AOS.init({ duration: 1200 });
+
+		const navLinks = document.querySelectorAll('.navbar nav a');
+		const sections = document.querySelectorAll('section');
+
+		function setActiveNav(){
+			let scrollPos = window.scrollY + 80;
+			sections.forEach(sec=>{
+				if(scrollPos>=sec.offsetTop && scrollPos < sec.offsetTop+sec.offsetHeight){
+					navLinks.forEach(a=>a.classList.remove('active-nav'));
+					let active = document.querySelector('.navbar nav a[href="#'+sec.id+'"]');
+					if(active) active.classList.add('active-nav');
+				}
+			});
+		}
+		window.addEventListener('scroll',setActiveNav);
+
+		const resumeInput = document.getElementById('resumeInput');
+		const fileStatus = document.getElementById('fileStatus');
+
+		resumeInput.addEventListener('change',()=>{
+			if(resumeInput.files && resumeInput.files.length > 0){
+				fileStatus.textContent = "Selected: " + resumeInput.files[0].name;
+			}
+		});
+		const applications = [
+			{company:"Google", role:"Frontend Intern", status:"applied", date:"2025-02-01"},
+			{company:"Amazon", role:"SDE", status:"interview", date:"2025-01-29"},
+			{company:"Microsoft", role:"ML Engineer", status:"selected", date:"2025-01-25"},
+			{company:"Infosys", role:"QA Tester", status:"rejected", date:"2025-01-20"},
+		];
+
+		function loadApps(){
+			const tbody = document.getElementById('appRows');
+			tbody.innerHTML = "";
+			applications.forEach(a=>{
+				tbody.innerHTML += `
+				<tr>
+					<td>${a.company}</td>
+					<td>${a.role}</td>
+					<td><span class="status-badge status-${a.status}">${a.status}</span></td>
+					<td>${a.date}</td>
+				</tr>`;
+			});
+		}
+		loadApps();
+
+		async function analyzeResume() {
+			const fileInput = document.getElementById('resumeInput');
+			const jobDesc = document.querySelector('.job-desc').value;
+			const loadingMsg = document.getElementById('loadingMessage');
+			const resultsContainer = document.getElementById('resultsContainer');
+
+			if (!fileInput.files || fileInput.files.length === 0) {
+				alert('Please select a resume file first.');
+				return;
+			}
+
+			const formData = new FormData();
+			formData.append('resume', fileInput.files[0]);
+			formData.append('jobDescription', jobDesc);
+
+			loadingMsg.style.display = 'block';
+			resultsContainer.style.display = 'none';
+
+			try {
+				const response = await fetch('http://localhost:3000/analyze-resume', {
+					method: 'POST',
+					body: formData
+				});
+
+				const result = await response.json();
+
+				if (result.success) {
+					displayResults(result.score);
+					document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+				} else {
+					alert('Error: ' + result.error);
+				}
+			} catch (error) {
+				console.error('Error:', error);
+				alert('Failed to analyze resume. Make sure the server is running.');
+			} finally {
+				loadingMsg.style.display = 'none';
+			}
+		}
+
+		function displayResults(score) {
+			// Update scores and progress bars
+			document.getElementById('overallScore').textContent = score.overallScore;
+			document.getElementById('scoreSummary').textContent = score.summary || 'Analysis complete';
+			
+			updateScoreWithProgress('ats', score.atsScore);
+			updateScoreWithProgress('skills', score.skillsScore);
+			updateScoreWithProgress('experience', score.experienceScore);
+			updateScoreWithProgress('format', score.formatScore);
+
+			// Update feedback lists
+			updateList('strengthsList', score.strengths);
+			updateList('improvementsList', score.improvements);
+			updateList('suggestionsList', score.suggestions);
+			
+			// Show keywords if available
+			if (score.keywordsMissing && score.keywordsMissing.length > 0) {
+				updateList('keywordsList', score.keywordsMissing);
+				document.getElementById('keywordsCard').style.display = 'block';
+			}
+
+			document.getElementById('resultsContainer').style.display = 'block';
+		}
+		
+		function updateScoreWithProgress(type, score) {
+			document.getElementById(type + 'Score').textContent = score;
+			const progress = document.getElementById(type + 'Progress');
+			progress.style.width = score + '%';
+			progress.className = 'progress ' + getScoreClass(score);
+		}
+		
+		function updateList(listId, items) {
+			const list = document.getElementById(listId);
+			list.innerHTML = '';
+			items.forEach(item => {
+				const li = document.createElement('li');
+				li.innerHTML = '<i class="fas fa-check-circle"></i>' + item;
+				list.appendChild(li);
+			});
+		}
+		
+		function getScoreClass(score) {
+			if (score >= 80) return 'excellent';
+			if (score >= 60) return 'good';
+			if (score >= 40) return 'average';
+			return 'poor';
+		}
+	</script>
+
+</body>
+</html>
