@@ -9,6 +9,85 @@
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
+	<script>
+const backendURL = "https://your-backend-name.onrender.com"; // 🔁 Replace this with your Render backend URL
+
+async function analyzeResume() {
+  const fileInput = document.getElementById("resumeInput");
+  const jobDesc = document.querySelector(".job-desc").value.trim();
+  const statusEl = document.getElementById("fileStatus");
+  const resultsEl = document.getElementById("resultsContainer");
+
+  if (!fileInput.files.length) {
+    alert("Please select a resume file first!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("resume", fileInput.files[0]);
+  formData.append("jobDescription", jobDesc);
+
+  statusEl.textContent = "⏳ Uploading and analyzing your resume...";
+  resultsEl.style.display = "none";
+
+  try {
+    const response = await fetch(`${backendURL}/analyze-resume`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error("Server error during analysis.");
+
+    const data = await response.json();
+    if (!data.success) throw new Error(data.error || "Analysis failed.");
+
+    // ✅ Show results section
+    const result = data.data;
+    resultsEl.style.display = "block";
+    statusEl.textContent = "✅ Analysis complete!";
+
+    // Update scores
+    document.getElementById("overallScore").textContent = result.overallScore;
+    document.getElementById("atsScore").textContent = result.atsScore;
+    document.getElementById("skillsScore").textContent = result.skillsScore;
+    document.getElementById("experienceScore").textContent = result.experienceScore;
+    document.getElementById("formatScore").textContent = result.formatScore;
+
+    // Animate progress bars
+    document.getElementById("atsProgress").style.width = `${result.atsScore}%`;
+    document.getElementById("skillsProgress").style.width = `${result.skillsScore}%`;
+    document.getElementById("experienceProgress").style.width = `${result.experienceScore}%`;
+    document.getElementById("formatProgress").style.width = `${result.formatScore}%`;
+
+    // Lists
+    populateList("strengthsList", result.strengths);
+    populateList("improvementsList", result.improvements);
+    populateList("suggestionsList", result.suggestions);
+
+    // Summary
+    document.getElementById("scoreSummary").textContent =
+      `Your resume scored ${result.overallScore}/100. Great job improving your ATS, skills, and experience alignment!`;
+
+  } catch (err) {
+    console.error("Error:", err);
+    statusEl.textContent = "❌ Failed to analyze resume. Please try again.";
+    alert(err.message);
+  }
+}
+
+// Helper function to fill lists
+function populateList(id, items) {
+  const ul = document.getElementById(id);
+  ul.innerHTML = "";
+  if (!items || !Array.isArray(items)) return;
+  items.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    ul.appendChild(li);
+  });
+}
+</script>
+
 <body>
 	<header class="navbar">
 		<div class="logo">CareerPath AI</div>
@@ -387,4 +466,5 @@
 
 </body>
 </html>
+
 
